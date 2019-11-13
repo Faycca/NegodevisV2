@@ -48,7 +48,7 @@ let tablefind = [];
 let optrap = priceminshow.value*centshow.value/100
 let nbtrap = trapshow.value;
 
-let nbr = 20000; // remplacer par l'algo de Philippe
+let nbr = 40000; // remplacer par l'algo de Philippe
 
 /////validation paramètres////
 function checkAllValid()

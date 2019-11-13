@@ -19340,7 +19340,7 @@ var tablefind = []; // operation trappes //
 
 var optrap = priceminshow.value * centshow.value / 100;
 var nbtrap = trapshow.value;
-var nbr = 20000; // remplacer par l'algo de Philippe
+var nbr = 40000; // remplacer par l'algo de Philippe
 /////validation paramètres////
 
 function checkAllValid() {
@@ -19768,8 +19768,8 @@ window.onload = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/popschool/Negodevis/NegoDevis_SimulationV2/NegoDevis_Simulation2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/popschool/Negodevis/NegoDevis_SimulationV2/NegoDevis_Simulation2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/popschool/Negodevis/NegoDevis_Simulation2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/popschool/Negodevis/NegoDevis_Simulation2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
