@@ -25,11 +25,11 @@ let theEND = document.getElementById("theEND");
 //envoie de données//
 let priceshow =document.getElementById("validationCustom01");//prix initial
 let trapshow = document.getElementById("validationCustom02");//trappes
-let rabshow = document.getElementById("validationCustom03");//rabais%
+let centshow = document.getElementById("validationCustom03");//rabais%
 let tourshow = document.getElementById("validationCustom04");//nombre de tour
 let priceminshow = document.getElementById("validationCustom05");//prix minimum de vente
 let timeshow = document.getElementById("validationCustom06");//le temps
-let actionshow = document.getElementById("validationCustom07");//
+let actionshow = document.getElementById("validationCustom07");//input
 
 //reception affichage de données //
 let showcount = document.getElementById("count");///le count du tableau
@@ -39,6 +39,16 @@ let showwant = document.getElementById("showwant");//prix proposé
 let showtour = document.getElementById("showtour");//nombre de tour
 let showrab = document.getElementById("showrab");// rabais
 let showtime = document.getElementById("minutes");//timer
+let xprop = document.getElementById("xprop");// value prop (25000)
+
+// array empty//
+let tablefind = [];
+
+// operation trappes //
+let optrap = priceminshow.value*centshow.value/100
+let nbtrap = trapshow.value;
+
+let nbr = 20000; // remplacer par l'algo de Philippe
 
 /////validation paramètres////
 function checkAllValid()
@@ -68,7 +78,7 @@ function forcard(event) {
 ///retour///
 function ret() {
     card.style.display = "none";
-    valid.style.display="flex";
+    valid.style.display= "flex";
 }
 ///ouvrir les paramètres///
 function openParam() {
@@ -83,6 +93,10 @@ function openParam() {
     open.style.display = "none";
     well.style.display = "none";
     divini.style.display = "initial";
+    console.log(trapshow.value + " trappes");
+    console.log(centshow.value + " % du prix minimum");
+    console.log(priceminshow.value + " prix minimum");
+    console.log(priceminshow.value*centshow.value/100 + " prix à ne pas dépasser");
 
     //envoie de données//
 
@@ -112,7 +126,6 @@ list.addEventListener('click', function(ev) {
     }
  }, false);
 
-
 function action() {
 
     /////////////ajout list////////////////
@@ -123,11 +136,34 @@ function action() {
 
     if (actionshow === ''){
         alert("Veuillez entrer une proposition !");
+        affiche.style.display = "none";
 
     } else {
         count++
         tableau.appendChild(tr);
     }
+    ////////////trappes %////////////
+    if (nbtrap == 0){
+        window.location.reload();
+    }
+    if (actionshow <= optrap) {
+        alert("Cette proposition n'est pas sérieuse il ne vous reste plus que "+"[ "+ nbtrap +" ] chance avant que la négociation soit annulée");
+        nbtrap--;
+        count --;
+        console.log(nbtrap +" décrémentation nombre de trap");
+    } else {
+
+     ////value want > last value////
+     let discount = Math.round((priceini.textContent - nbr)*100/priceini.textContent);
+
+     let last = tablefind[tablefind.length -1];
+     if (count > 0) {
+         tablefind.push(actionshow);
+         console.log(last + " table");
+        if (actionshow <= last ) {
+            alert("Veuillez faire une proposition supérieure à l'ancienne !");
+            count --;
+         } else {
 
     document.getElementById("validationCustom07").value = "";
     document.getElementById("validationCustom01").value = "";
@@ -141,9 +177,9 @@ function action() {
     var tdthree = document.createElement("TD");
     var t = document.createTextNode(actionshow);
     var tdfour = document.createElement("TD");
-    var want = document.createTextNode("25000");
+    var want = document.createTextNode(nbr); //// api de Philippe à rajouter
     var tdfive = document.createElement("TD");
-    var sold = document.createTextNode("20%");
+    var sold = document.createTextNode(discount + " %");
 
     //////////////////////DIV in TD////////////////
 
@@ -154,6 +190,7 @@ function action() {
     var divfive = document.createElement("DIV");
 
     //////////////////TD class///////////////////
+
 
     tr.className = "trTABLE";
     tdtwo.className = "blockall selfed";// vendeur
@@ -166,6 +203,7 @@ function action() {
 
     ///////////// DIV class////////////////////////
 
+
     divone.className ="cell countone";
     divtwo.className ="cell selfone";
     divtwo.id = "xval";
@@ -177,7 +215,7 @@ function action() {
     ////////////TD appendChild////////////////
 
     tr.appendChild(tdtwo);//vendeur
-    tr.appendChild(t); // value
+    //tr.appendChild(t); // value
     tr.appendChild(tdthree);//count
     tr.appendChild(tdone);//ini
     tr.appendChild(tdfour);//prix proposé
@@ -201,7 +239,7 @@ function action() {
     visibbutton.style.display = "none";
     yesorno.style.display = "flex";
 
-    ///////decrementation//////
+    ///////decrementation compteur//////
 
     showcount.textContent--;
     if(showcount.textContent < 1){
@@ -214,52 +252,56 @@ function action() {
     stop.style.display= "none";
      }
 
-     ////////////loader/////////////
-    const aleatoire = Math.floor(Math.random() * 4000) + 5000;;
-    const delay = 4;
+     console.log(count +" compteur");
 
-    let i = 0;
-    let cvs = document.getElementById('progress');
-    let affiche = document.getElementById("afficheLoader");
-    let afficheCache = document.getElementById("yesorno");
+    //  ////////////loader/////////////
+     const aleatoire = Math.floor(Math.random() * 4000) + 5000;;
+     const delay = 4;
 
-    if(cvs.getContext){
+     let i = 0;
+     let cvs = document.getElementById('progress');
+     let affiche = document.getElementById("afficheLoader");
+     let afficheCache = document.getElementById("yesorno");
+
+     if(cvs.getContext){
         let ctx = cvs.getContext('2d');
         const x = cvs.width*0.5;
-        const y = cvs.height*0.5;
-        const r = 120;
-        let interval = setInterval(function() {
-            i += delay;
-            let multiplicator = (i / aleatoire) * 2;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, multiplicator*Math.PI, false)
-            ctx.strokeStyle = "#FFBF00";
-            ctx.lineWidth = 27;
-            ctx.stroke();
-            if(i >= aleatoire+(delay)){clearInterval(interval);}
-        }, delay)
+         const y = cvs.height*0.5;
+         const r = 120;
+         let interval = setInterval(function() {
+             i += delay;
+             let multiplicator = (i / aleatoire) * 2;
+             ctx.beginPath();
+             ctx.arc(x, y, r, 0, multiplicator*Math.PI, false)
+             ctx.strokeStyle = "#FFBF00";
+             ctx.lineWidth = 27;
+             ctx.stroke();
+             if(i >= aleatoire+(delay)){clearInterval(interval);}
+         }, delay)
 
 
-        afficheCache.style.display="none";
-        tableau.style.display="none";
-        affiche.style.display="initial";
-        loader.style.display="initial";
-        setTimeout(function(){
-            affiche.style.display="";
-            loader.style.display = "none";
-        }, aleatoire+(aleatoire/5));
-        setTimeout(function(){
-            ctx.clearRect(0,0,cvs.width, cvs.height);
-        }, aleatoire+(aleatoire/4.5));
-        setTimeout(function(){
-            afficheCache.style.display = "flex";
-            }, aleatoire);
-        setTimeout(function(){
-            tableau.style.display = "";
-            }, aleatoire);
-         }
+         afficheCache.style.display="none";
+         tableau.style.display="none";
+         affiche.style.display="initial";
+         loader.style.display="initial";
+         setTimeout(function(){
+             affiche.style.display="";
+             loader.style.display = "none";
+         }, aleatoire+(aleatoire/5));
+         setTimeout(function(){
+             ctx.clearRect(0,0,cvs.width, cvs.height);
+         }, aleatoire+(aleatoire/4.5));
+         setTimeout(function(){
+             afficheCache.style.display = "flex";
+             }, aleatoire);
+         setTimeout(function(){
+             tableau.style.display = "";
+             }, aleatoire);
+        }
+      }
     }
-
+  }
+}
 ////////conditions//////////////
 
 function acceptNego() {

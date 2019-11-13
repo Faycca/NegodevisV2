@@ -163,7 +163,7 @@
       <div class="cardinput col-4">
         <label for="validationCustom03" class="titi">Taux de la trappe</label>
         <div class="input-group mb-3">
-        <input type="number" class="form-control field" id="validationCustom03 " placeholder="Entrez le taux de trappe" value="" required>
+        <input type="number" class="form-control field" id="validationCustom03" placeholder="Entrez le taux de trappe" value="" required>
         <div class="input-group-append">
           <span class="input-group-text unitpour">%</span>
         </div>
@@ -186,7 +186,7 @@
       <div class="cardinput col-4">
         <label for="validationCustom05" class="titi">Prix minimum de vente</label>
         <div class="input-group">
-        <input type="text" class="form-control field" id="validationCustom05 " placeholder="Entrez votre prix minimum" value="" required>
+        <input type="text" class="form-control field" id="validationCustom05" placeholder="Entrez votre prix minimum" value="" required>
         <div class="input-group-append">
           <span class="input-group-text unitmin">€</span>
         </div>
